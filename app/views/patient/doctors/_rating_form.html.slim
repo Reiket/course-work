@@ -1,0 +1,8 @@
+.block
+  = f.hidden_field :doctor_id, value: @doctor.id
+  = f.label :score, 'Оцініть від 1 до 5', class: 'default-label'
+  = f.number_field :score, in: 1..5, required: true, label: true, class: 'default-input first'
+.block.column
+  = f.label :review, 'Напишіть коментар', class: 'default-label'
+  = f.text_area :review, class: 'default-input last', required: true, label: true
+= f.submit 'Оцінити', class: 'default-btn red'

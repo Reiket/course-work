@@ -1,0 +1,3 @@
+.schedule__column
+  - day.working_hours.order(:hour).each do |hour|
+    = render 'working_hour', working_hour: hour

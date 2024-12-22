@@ -1,0 +1,34 @@
+.back__button
+  a.default-btn.blue href="#best_doctors" Найкращі лікарі
+.doctors
+  .doctors__container
+    h1.doctors__title Лікарі
+    .doctors__inner
+      - @doctors.each do |doctor|
+        .doctors__card.doctor
+          .doctor__img
+            = image_tag doctor_photo(doctor)
+          .doctor__name #{doctor.name} #{doctor.surname}
+          .doctor__position #{doctor.position}
+          .doctor__experience Стаж роботи: #{doctor.experience} роки
+          = link_to 'Обрати', patient_doctor_path(doctor.id), class: 'default-btn red'
+    h1.doctors__title.best Найкращі лікарі
+    #best_doctors.best_doctors
+      - if @most_reviewed_doctor.present?
+        .doctors__card.doctor
+          .badge Найпопулярніший лікар <br> <span>(за кількістю відгуків)<span>
+          .doctor__img
+            = image_tag doctor_photo(@most_reviewed_doctor)
+          .doctor__name #{@most_reviewed_doctor.name} #{@most_reviewed_doctor.surname}
+          .doctor__position #{@most_reviewed_doctor.position}
+          .doctor__experience Стаж роботи: #{@most_reviewed_doctor.experience} роки
+          = link_to 'Обрати', patient_doctor_path(@most_reviewed_doctor.id), class: 'default-btn red'
+      - if @most_reviewed_doctor.present?
+        .doctors__card.doctor
+          .badge Найкращий лікар <br> <span>(за оцінками)<span>
+          .doctor__img
+            = image_tag doctor_photo(@best_rated_doctor)
+          .doctor__name #{@best_rated_doctor.name} #{@best_rated_doctor.surname}
+          .doctor__position #{@best_rated_doctor.position}
+          .doctor__experience Стаж роботи: #{@best_rated_doctor.experience} роки
+          = link_to 'Обрати', patient_doctor_path(@best_rated_doctor.id), class: 'default-btn red'

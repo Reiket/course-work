@@ -1,0 +1,12 @@
+nav
+  ul.navbar
+    li class=active_class_for_path(doctor_profiles_path)
+      = link_to 'Профіль', doctor_profiles_path
+    li class=active_class_for_path(doctor_schedules_path)
+      = link_to 'Розклад', doctor_schedules_path
+    li class=active_class_for_path(doctor_appointments_path)
+      = link_to 'Записи', doctor_appointments_path
+    li class=active_class_for_path(doctor_statistics_path)
+      = link_to 'Статистика', doctor_statistics_path
+    li
+      = link_to 'Вийти', destroy_user_session_path, :method => :delete

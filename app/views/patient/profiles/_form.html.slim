@@ -1,0 +1,35 @@
+.default-center-page.patient-new
+  = form_with model: @patient, url: patient_profile_path(@patient) do |f|
+    h1.page__title Профіль
+    .flex-inner
+      .flex-column.first
+        = f.label :name, "Ім'я", class: 'default-label'
+        = f.text_field :name, class: 'default-input mb-3', required: true, label: true
+        = f.label :surname, "Прізвище", class: 'default-label'
+        = f.text_field :surname, class: 'default-input mb-3', required: true, label: true
+        = f.label :birthday, "День народження", class: 'default-label'
+        = f.date_field :birthday, class: 'default-input mb-3', required: true, label: true
+        = f.label :residence, "Місце проживання", class: 'default-label'
+        = f.text_field :residence, class: 'default-input', required: true, label: true
+      .flex-row.first
+        .admin-upload-main
+          .admin-project__img-box
+            .upload-inner-box
+              = image_tag 'upload-icon.png', alt: 'upload', title: 'NVB | upload', class: 'upload-img'
+            - unless image_present?(@patient)
+              = image_tag image_present(@patient)
+            = f.file_field :photo, class: 'upload-input'
+            = image_tag '', class: 'preview-image', alt: 'Image Preview', style: 'display: none;'
+          .admin-label-wrapper
+            = f.label :photo, 'Вибрати фото', class: 'default-btn red'
+    .flex-inner
+      .flex-column.first
+        = f.label :phone_number, "Номер телефону", class: 'default-label'
+        = f.number_field :phone_number, class: 'default-input',
+                required: true, minlength: 10, maxlength: 10, label: true
+      .flex-column.first
+        = f.label :gender, "Стать", class: 'default-label'
+        = f.select :gender,
+                Patient.genders.keys.map { |gender| [gender.capitalize, gender] },
+                {}, class: 'default-input'
+    = f.submit 'Підтвердити', class: 'default-btn red'

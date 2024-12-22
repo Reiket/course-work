@@ -1,0 +1,20 @@
+.home
+  .home__inner
+    .home__content
+      h1.home__title Ласкаво просимо в нашу поліклініку
+      p.home__description Здоров'я в твоїх руках! Турбуємося про ваше здоров'я. Наші досвідчені лікарі готові надати вам
+                          якісну медичну допомогу. Зареєструйтеся або увійдіть, щоб отримати доступ до послуг.
+      .group__buttons
+        - if current_user
+          - if current_user.role == 'patient'
+            = link_to 'Перейти до кабінету', patient_profiles_path, class: 'default-btn red'
+          - else
+            = link_to 'Перейти до кабінету', doctor_profiles_path, class: 'default-btn red'
+        - else
+          = link_to 'Увійти', new_user_session_path, class: 'default-btn blue'
+          = link_to 'Зареєструватись', new_user_registration_path, class: 'default-btn green'
+    = image_tag 'doctor-home.png', class: 'home__image'
+  .home__footer
+    .footer__text Головним  скарбом  життя  є  не  землі,  що  ти  їх  завоював,  не  багатства,  що  їх маєш
+                  у  скринях...  Головним  скарбом  життя  є  здоров’я,  і,  щоб  його  зберегти,
+                  потрібно багато що знати. <span>(Авіцена)</span>

@@ -1,0 +1,58 @@
+.back__button
+  = link_to 'Вернутись назад', :back, class: 'default-btn red'
+.patient_view.doctor
+  .doctor__container
+    .doctor__inner
+      .doctor__flex
+        .doctor__content
+          .doctor__name #{@doctor.name} #{@doctor.surname}
+          .doctor__block
+            span.label Номер телефону:
+            span.info = @doctor.phone_number
+          .doctor__block
+            span.label Звання:
+            span.info = @doctor.position
+          .doctor__block
+            span.label Стаж роботи:
+            span.info #{@doctor.experience} роки
+        .doctor__photo
+          = image_tag doctor_photo(@doctor)
+  .doctor__review
+    - if @own_rating
+      h4.heading Змінити оцінку лікаря
+      = form_with model: @own_rating,
+              url: patient_edit_rating_path(@own_rating.id),
+              method: :put,
+              class: 'form-rating' do |f|
+        = render 'rating_form', f: f
+    - else
+      h4.heading Оцінити лікаря
+      = form_with model: @rating, url: patient_create_rating_path, class: 'form-rating' do |f|
+        = render 'rating_form', f: f
+- unless @ratings.blank?
+  .button-center
+    a.default-btn.blue href="#reviews" Бажаєте переглянути оцінки інших користувачів!
+.schedule__container
+  .inner
+    h1.title Розклад лікаря
+  .schedule
+    .schedule__header
+      - @working_days.each do |day|
+        .schedule__item
+          .text = day.name
+    .schedule__body
+      - @working_days.each do |day|
+        - if day.status == 'workday'
+          = render 'working_day', day: day
+        - else
+          .schedule__column.day-off
+            .schedule__day-off Вихідний
+- unless @ratings.blank?
+  #reviews.reviews
+    .reviews__title Відгуки
+    .ratings
+      - @ratings.each do |rating|
+        .rating
+          .user #{rating.patient.name} #{rating.patient.surname}
+          .stars Оцінка: #{rating.score} / 5
+          .text Коментар: #{rating.review}

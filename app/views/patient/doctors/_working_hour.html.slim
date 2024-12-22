@@ -1,0 +1,9 @@
+.schedule__item class="#{'disable' if working_hour.hour_gone == true}"
+  .schedule__hour = working_hour.hour.strftime("%H:%M")
+  - if working_hour.hour_gone != true && working_hour.appointment.nil?
+    = button_to 'Записатись',
+            patient_create_appointment_path(doctor_id: @doctor.id, working_hour_id: working_hour.id),
+            method: :post,
+            class: 'link-green-register'
+  - else
+    .red-warning = working_hour.hour_gone == true ? "Не доступно" : "Зайнято"

@@ -1,0 +1,18 @@
+.doctor.doctor__profile
+  .doctor__container
+    .doctor__inner
+      h1.doctor__title Ваш профіль!
+      .doctor__flex
+        .doctor__content
+          .doctor__name #{@doctor.name} #{@doctor.surname}
+          .doctor__block
+            span.label Ваш номер телефону:
+            span.info = @doctor.phone_number
+          .doctor__block
+            span.label Ваше звання:
+            span.info = @doctor.position
+          .doctor__block
+            span.label Ваш стаж роботи:
+            span.info #{@doctor.experience} роки
+        .doctor__photo
+          = image_tag doctor_photo(@doctor)

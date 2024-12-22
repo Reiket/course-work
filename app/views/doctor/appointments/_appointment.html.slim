@@ -1,0 +1,39 @@
+.appointment
+  .appointment__header
+    .link-doctor = get_patient_name(appointment)
+  .appointment__text До вас записались на прийом! <br> #{get_status_appointment(appointment)}
+  .appointment__footer
+    .appointment__time <span>Час запису:</span> #{appointment.time.strftime("%A %H:%M, %B %d, %Y")}
+    - if appointment.status == 'pending' && appointment.time >= Time.now
+      = button_to 'Підтвердити запит',
+              doctor_confirm_appointment_path(appointment.id),
+              method: :put,
+              class: 'default-btn red'
+    button.default-btn.blue.js-modal[type="button" data-modal="#view_user#{appointment.patient_id}"]
+      | Переглянути профіль
+  .modal-window.patient id="view_user#{appointment.patient_id}"
+    .modal-window__title
+      .flex-inner.mb-3
+        .flex-column.first
+          = label :name, "Ім'я", class: 'default-label'
+          .default-input.mb-3 = appointment.patient.name
+          = label :surname, "Прізвище", class: 'default-label'
+          .default-input.mb-3 = appointment.patient.surname
+          = label :birthday, "Рік народження", class: 'default-label'
+          .default-input.mb-3 = appointment.patient.birthday.strftime("%d %B %Y")
+          = label :birthday, "Місце проживання", class: 'default-label'
+          .default-input.mb-3 = appointment.patient.residence
+        .flex-row.first
+          .admin-upload-main
+            .admin-project__img-box
+              - unless image_present?(appointment.patient)
+                = image_tag image_present(appointment.patient)
+      .flex-inner
+        .flex-column.first
+          = label :phone_number, "Номер телефону", class: 'default-label'
+          .default-input.mb-3 = appointment.patient.phone_number
+        .flex-column.first
+          = label :phone_number, "Стать", class: 'default-label'
+          .default-input.mb-3 = appointment.patient.gender
+      a.modal-close.default-btn.red[href="#"]
+        | Закрити

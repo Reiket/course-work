@@ -1,0 +1,20 @@
+.statistics
+  .statistics__title Статистика
+  .statistics__inner
+    .block
+      span.label Кількість задоволених клієнтів:
+      span.info = @doctor.satisfied_patients_count
+    .block
+      span.label Середня оцінка:
+      span.info = @ratings.average(:score).to_f
+    .block
+      span.label Кількість відгуків:
+      span.info = @ratings.count
+.reviews
+  .reviews__title Відгуки від пацієнтів про Вас
+  .ratings
+    - @ratings.each do |rating|
+      .rating
+        .user #{rating.patient.name} #{rating.patient.surname}
+        .stars Оцінка: #{rating.score} / 5
+        .text Коментар: #{rating.review}

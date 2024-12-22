@@ -1,0 +1,6 @@
+.schedule__item
+  = link_to doctor_working_hour_path(working_hour),
+          data: { turbo_method: :delete, turbo_confirm: "Ви впевнені, що хочете видалити цю годину?" },
+          class: 'btn-delete' do
+    = image_tag 'delete-icon.svg'
+  .schedule__hour = working_hour.hour.strftime("%H:%M")

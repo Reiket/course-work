@@ -1,0 +1,17 @@
+.appointment__page
+  - if @appointments.present?
+    .page__title class="#{'display-none' if @appointments_pending.blank?}" Надіслані запити до Вас на прийом
+    .appointments
+      - @appointments_pending.each do |appointment|
+        = render 'appointment', appointment: appointment
+    .page__title class="#{'display-none' if @appointments_confirmed.blank?}" Активні записи
+    .appointments
+      - @appointments_confirmed.each do |appointment|
+        = render 'appointment', appointment: appointment
+    .page__title class="#{'display-none' if @appointments.visited.blank?}" Архів записів
+    .appointments
+      - @appointments.visited.each do |appointment|
+        = render 'appointment', appointment: appointment
+  - else
+    .not-found
+      .text У вас поки що немає прийомів, заждіть поки до вас хтось надішле запит з пацієнтів!

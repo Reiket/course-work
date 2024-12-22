@@ -1,0 +1,19 @@
+.schedule__container
+  .inner
+    h1.title Ваш розклад
+  .schedule
+    .schedule__header
+      - @working_days.each do |day|
+        .schedule__item
+          .text = day.name
+          = button_to 'Змінити статус',
+                  doctor_change_status_day_path(day.id),
+                  method: :put,
+                  class: 'link-green-register border'
+    .schedule__body
+      - @working_days.each do |day|
+        - if day.status == 'workday'
+          = render 'working_day', day: day
+        - else
+          .schedule__column.day-off
+            .schedule__day-off Вихідний

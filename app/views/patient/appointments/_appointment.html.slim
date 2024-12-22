@@ -1,0 +1,12 @@
+.appointment
+  .appointment__header
+    = link_to "#{get_doctor_name(appointment)}", patient_doctor_path(appointment.doctor.id), class: 'link-doctor'
+    h4 = appointment.doctor.position
+  .appointment__text Ви записались на прийом! <br> #{get_status_appointment(appointment)}
+  .appointment__footer
+    .appointment__time <span>Час запису:</span> #{appointment.time.strftime("%A, %B %d, %Y %H:%M")}
+    - if appointment.status == 'pending' && appointment.time >= Time.now
+      = link_to 'Скасувати запит',
+              patient_appointment_path(appointment.id),
+              data: { turbo_method: :delete, turbo_confirm: "Ви впевнені, що хочете скасувати цей запис?" },
+              class: 'default-btn red'

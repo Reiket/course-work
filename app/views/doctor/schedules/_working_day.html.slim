@@ -1,0 +1,11 @@
+.schedule__column
+  - day.working_hours.order(:hour).each do |hour|
+    = render 'working_hour', working_hour: hour
+  = form_with model: [:doctor, @working_hour] do |f|
+    .form-inner
+      .inputs-box
+        = f.hidden_field :working_day_id, value: day.id
+        = f.label :hour, "Година", class: 'default-label'
+        = f.time_field :hour, required: true, class: 'default-input'
+      .admin-button-create-box
+        = f.submit "Додати", class: 'default-btn green'
